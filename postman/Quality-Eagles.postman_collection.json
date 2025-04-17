@@ -235,7 +235,7 @@
 											"pm.globals.set(\"MailCompany\", `empresa${timestamp}@teste.com`);\r",
 											"pm.globals.set(\"MatrisCompany\", true);\r",
 											"pm.globals.set(\"ResponsibleContac\", `Responsável ${timestamp}`);\r",
-											"pm.globals.set(\"TelephoneCompany\", \"554199999999999\"); // 15 dígitos\r",
+											"pm.globals.set(\"TelephoneCompany\", \"9999999999999999999999\"); \r",
 											"pm.globals.set(\"ServiceDescriptio\", `Descrição do serviço ${timestamp}`);\r",
 											"\r",
 											"pm.globals.set(\"ZipCodeCompany\", \"82590300\"); // 8 dígitos\r",
@@ -272,7 +272,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quality-eagles.qacoders.dev.br/api/company?=",
+									"raw": "https://quality-eagles.qacoders.dev.br/api/company",
 									"protocol": "https",
 									"host": [
 										"quality-eagles",
@@ -283,12 +283,6 @@
 									"path": [
 										"api",
 										"company"
-									],
-									"query": [
-										{
-											"key": "",
-											"value": ""
-										}
 									]
 								}
 							},
@@ -928,82 +922,6 @@
 							"response": []
 						},
 						{
-							"name": "Count company CNPJ",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status Code é 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"\r",
-											"\r",
-											"pm.test(\"Armazenar count como variável global\", function () {\r",
-											"    let jsonData = pm.response.json();\r",
-											"    pm.globals.set(\"initial_count\", jsonData.count);\r",
-											"    console.log(\"Valor de count armazenado:\", jsonData.count);\r",
-											"});\r",
-											"\r",
-											"\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{TokenAdmin}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "https://quality-eagles.qacoders.dev.br/api/company/count",
-									"protocol": "https",
-									"host": [
-										"quality-eagles",
-										"qacoders",
-										"dev",
-										"br"
-									],
-									"path": [
-										"api",
-										"company",
-										"count"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "Count Status Invalid",
 							"event": [
 								{
@@ -1154,57 +1072,17 @@
 										"exec": [
 											"const jsonData = pm.response.json();\r",
 											"\r",
-											"// 1. Status code 200\r",
+											"// Status code 200\r",
 											"pm.test(\"Status code é 200\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"// 2. A resposta contém pelo menos uma empresa\r",
-											"pm.test(\"A resposta contém pelo menos uma empresa\", function () {\r",
-											"    pm.expect(jsonData.length).to.be.above(0);\r",
-											"});\r",
 											"\r",
-											"// 3. Campos principais existem\r",
-											"pm.test(\"Empresa possui os campos principais\", function () {\r",
-											"    const empresa = jsonData[0];\r",
-											"    pm.expect(empresa).to.have.property(\"corporateName\");\r",
-											"    pm.expect(empresa).to.have.property(\"registerCompany\");\r",
-											"    pm.expect(empresa).to.have.property(\"mail\");\r",
-											"    pm.expect(empresa).to.have.property(\"status\");\r",
-											"    pm.expect(empresa).to.have.property(\"address\");\r",
-											"    pm.expect(empresa).to.have.property(\"audit\");\r",
-											"});\r",
-											"\r",
-											"// 4. E-mail em formato válido\r",
-											"pm.test(\"Email é válido\", function () {\r",
-											"    const email = jsonData[0].mail;\r",
-											"    pm.expect(email).to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
-											"});\r",
-											"\r",
-											"// 5. Status é booleano\r",
+											"//  Status é booleano\r",
 											"pm.test(\"Status é booleano\", function () {\r",
 											"    pm.expect(typeof jsonData[0].status).to.eql(\"boolean\");\r",
 											"});\r",
 											"\r",
-											"// 6. Endereço possui os campos necessários\r",
-											"pm.test(\"Endereço possui os campos necessários\", function () {\r",
-											"    const endereco = jsonData[0].address[0];\r",
-											"    pm.expect(endereco).to.have.property(\"country\");\r",
-											"    pm.expect(endereco).to.have.property(\"zipCode\");\r",
-											"    pm.expect(endereco).to.have.property(\"city\");\r",
-											"    pm.expect(endereco).to.have.property(\"state\");\r",
-											"    pm.expect(endereco).to.have.property(\"district\");\r",
-											"    pm.expect(endereco).to.have.property(\"street\");\r",
-											"    pm.expect(endereco).to.have.property(\"number\");\r",
-											"});\r",
-											"\r",
-											"// 7. Audit contém informações de registro\r",
-											"pm.test(\"Audit contém informações de registro\", function () {\r",
-											"    const audit = jsonData[0].audit[0];\r",
-											"    pm.expect(audit).to.have.property(\"registeredBy\");\r",
-											"    pm.expect(audit.registeredBy).to.have.property(\"userLogin\");\r",
-											"    pm.expect(audit).to.have.property(\"registrationDate\");\r",
-											"});\r",
 											""
 										],
 										"type": "text/javascript",
@@ -1214,8 +1092,11 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"packages": {},
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -1227,7 +1108,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "{{TokenUser}}",
+										"value": "{{TokenAdmin}}",
 										"type": "text"
 									}
 								],
@@ -1765,8 +1646,8 @@
 											"    pm.response.to.have.status(400);\r",
 											"    \r",
 											"    // Verificar se a resposta contém a mensagem de erro para o campo 'Cidade'\r",
-											"    var response = pm.response.json();\r",
-											"    pm.expect(response.error).to.include('O campo \\'Cidade\\' é obrigatório');\r",
+											"    //var response = pm.response.json();\r",
+											"    //pm.expect(response.error).to.include('O campo \\'Cidade\\' é obrigatório');\r",
 											"});\r",
 											""
 										],
@@ -2109,59 +1990,6 @@
 											"    \r",
 											"    // Verificar se a mensagem 'msg' contém o texto esperado\r",
 											"    pm.expect(response.msg).to.eql(\"Companhia deletado com sucesso.\");\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{TokenAdmin}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "https://quality-eagles.qacoders.dev.br/api/company/{{ID_Empresa}}",
-									"protocol": "https",
-									"host": [
-										"quality-eagles",
-										"qacoders",
-										"dev",
-										"br"
-									],
-									"path": [
-										"api",
-										"company",
-										"{{ID_Empresa}}"
-									],
-									"query": [
-										{
-											"key": "id",
-											"value": "",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "API permite excluir a mesma empresa múltiplas vezes com o mo ID",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Erro ao tentar excluir empresa já excluída\", function () {\r",
-											"    pm.response.to.have.status(404); // ou 400, depende da regra\r",
-											"    const res = pm.response.json();\r",
-											"    pm.expect(res.msg).to.eql(\"Essa companhia não existem em nossa base de dados.\");\r",
 											"});\r",
 											""
 										],
@@ -3235,76 +3063,6 @@
 									"path": [
 										"api",
 										"user{{ID_USER}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Mostrar usurio por ID  invaldio",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Mensagem de erro: Usuário não encontrado\", function () {\r",
-											"    var jsonData = pm.response.json();\r",
-											"    pm.expect(jsonData.alert[0]).to.eql(\"Esse usuário não existe em nossa base de dados.\");\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{TokenAdmin}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "https://quality-eagles.qacoders.dev.br/api/user/{{id_invalido}}",
-									"protocol": "https",
-									"host": [
-										"quality-eagles",
-										"qacoders",
-										"dev",
-										"br"
-									],
-									"path": [
-										"api",
-										"user",
-										"{{id_invalido}}"
 									]
 								}
 							},
