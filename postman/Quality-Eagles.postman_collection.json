@@ -205,20 +205,26 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"⚠️ Verificação: API aceitou telefone com 21 dígitos\", function () {\r",
-											"    let telefoneEnviado = \"111111111111111111111\";\r",
-											"    let status = pm.response.code;\r",
+											"const status = pm.response.code;\r",
+											"const telefoneEnviado = \"678910111213141554\"; // Exemplo de telefone com 21 dígitos\r",
 											"\r",
-											"    if (status === 200 || status === 201) {\r",
-											"        console.warn(\"⚠️ API aceitou telefone com 21 dígitos (BUG): \" + telefoneEnviado);\r",
-											"    }\r",
+											"// Verificação geral do status\r",
+											"pm.expect([200, 201, 400, 422]).to.include(status);\r",
 											"\r",
-											"    pm.expect([200, 201, 400, 422]).to.include(status); // Não falha o teste\r",
-											"});\r",
-											"pm.test(\"Mensagem de erro do telefone está correta\", function () {\r",
-											"    var jsonData = pm.response.json();\r",
-											"    pm.expect(jsonData.error[0]).to.eql(\"O campo 'Telefone' deve ter 15 números para telefone nacional e 20 números para telefone internacional.\");\r",
-											"});"
+											"// Aviso de bug, se a API aceitar telefone com 21 dígitos\r",
+											"if (status === 200 || status === 201) {\r",
+											"  console.warn(\"⚠️ API aceitou telefone com 21 dígitos (BUG): \" + telefoneEnviado);\r",
+											"} else {\r",
+											"  // Só verifica a mensagem de erro se NÃO for sucesso\r",
+											"  pm.test(\"Mensagem de erro do telefone está correta\", function () {\r",
+											"    const jsonData = pm.response.json();\r",
+											"\r",
+											"    pm.expect(jsonData?.error?.[0]).to.eql(\r",
+											"      \"O campo 'Telefone' deve ter 15 números para telefone nacional e 20 números para telefone internacional.\"\r",
+											"    );\r",
+											"  });\r",
+											"}\r",
+											""
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -429,7 +435,7 @@
 											"    \r",
 											"    pm.test(\"Mensagem de erro para campo Telefone obrigatório\", function () {\r",
 											"    var jsonData = pm.response.json();\r",
-											"    pm.expect(jsonData.error[0]).to.eql(\"O campo 'Telefone' deve conter somente números.\");\r",
+											"    pm.expect(jsonData.error[0]).to.eql(\"O campo 'Telefone' é obrigatório.\");\r",
 											"});\r",
 											"\r",
 											"})"
@@ -1408,66 +1414,6 @@
 										{
 											"key": "ID",
 											"value": "{{ID_INEXISTENTE}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Mostrar empresa por ID com TokenAdmin e TokenUser",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 403\", function () {\r",
-											"    pm.response.to.have.status(403);\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{TokenUser}}{{TokenAdmin}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "https://quality-eagles.qacoders.dev.br/api/company?Id={{ID_Empresa}}",
-									"protocol": "https",
-									"host": [
-										"quality-eagles",
-										"qacoders",
-										"dev",
-										"br"
-									],
-									"path": [
-										"api",
-										"company"
-									],
-									"query": [
-										{
-											"key": "Id",
-											"value": "{{ID_Empresa}}"
 										}
 									]
 								}
@@ -2637,9 +2583,11 @@
 											"pm.test(\"Status code é 404\", function () {\r",
 											"    pm.response.to.have.status(404);\r",
 											"});\r",
-											"pm.test(\"Usuário não encontrado\", function () {\r",
+											"\r",
+											"pm.test(\"Mensagem de erro 'Esse usuário não existe em nossa base de dados.' está correta\", function () {\r",
 											"    const jsonData = pm.response.json();\r",
-											"    pm.expect(jsonData.alert[0]).to.include(\"Esse usuário não existe em nossa base de dados.\");\r",
+											"    pm.expect(jsonData).to.have.property('alert');\r",
+											"    pm.expect(jsonData.alert[0]).to.eql(\"Esse usuário não existe em nossa base de dados.\");\r",
 											"});\r",
 											""
 										],

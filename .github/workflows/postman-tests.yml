@@ -25,4 +25,4 @@ jobs:
       run: npm install -g newman
 
     - name: Run Postman Collection
-      run: newman run ./postman/Quality-Eagles.postman_collection.json -e ./postman/dojo-academy.postman_environment.json -g ./postman/global-variables.json
+      run: newman run ./postman/Quality-Eagles.postman_collection.json -e ./postman/dojo-academy.postman_environment.json -g ./postman/workspace.postman_globals.json
