@@ -310,19 +310,19 @@
 		{
 			"globals": [
 			  {
-				"_postman_exported_at": "2025-04-17T02:21:57.354Z",
-				"_postman_exported_using": "Postman/11.41.1-250415-1220"
-			  }
-			],
-			"name": "Globals",
-			"_postman_variable_scope": "globals",
-			"variables": [
-			  {
-				"key": "Id_user",
+				"key": "some_key",
 				"value": "",
+				"type": "any",
+				"enabled": true
+			  },
+			  {
+				"key": "another_key",
+				"value": "some_value",
 				"type": "any",
 				"enabled": true
 			  }
 			]
-		  }
+		}	
+	]
+}	  
 		  
