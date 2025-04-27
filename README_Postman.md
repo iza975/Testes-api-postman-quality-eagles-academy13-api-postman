@@ -46,7 +46,7 @@ A coleção de testes cobre os principais endpoints da API disponibilizada no de
 
 Durante a execução dos testes automatizados no Postman, são feitas diversas validações, como:
 
-- tatus Code 200 para requisições de sucesso (GET, PUT, DELETE)  
+- Status Code 200 para requisições de sucesso (GET, PUT, DELETE)  
 - Status Code 201 - Created para criação de dados  
 - Mensagens de sucesso** no corpo da resposta (body)  
 - Nome da empresa presente na resposta  
