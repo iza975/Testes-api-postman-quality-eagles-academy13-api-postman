@@ -21,8 +21,22 @@ jobs:
       with:
         node-version: '16'
 
-    - name: Install Newman
-      run: npm install -g newman
+    - name: Install Newman and HTML Reporter
+      run: |
+        npm install -g newman
+        npm install -g newman-reporter-html
 
-    - name: Run Postman Collection
-      run: newman run ./postman/Quality-Eagles.postman_collection.json -e ./postman/dojo-academy.postman_environment.json -g ./postman/workspace.postman_globals.json
+    - name: Run Postman Collection and Generate HTML Report
+      run: |
+        newman run ./postman/Quality-Eagles.postman_collection.json \
+          -e ./postman/dojo-academy.postman_environment.json \
+          -g ./postman/workspace.postman_globals.json \
+          -r cli,html \
+          --reporter-html-export newman-report.html
+
+    - name: Upload Test Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: newman-html-report
+        path: newman-report.html
+
