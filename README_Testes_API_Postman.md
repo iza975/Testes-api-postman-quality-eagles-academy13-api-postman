@@ -1,7 +1,6 @@
+# Testes de API - Postman | Quality Eagles - Academy 13
 
-Testes de API - Postman | Quality Eagles - Academy 13
-Este projeto faz parte do programa de formação QA Coders Academy 13 da QAcoders, com o objetivo de criar e executar testes de API utilizando o Postman.
-
+Este projeto faz parte do programa de formação QA Coders Academy  da QAcoders, com o objetivo de criar e executar testes de API utilizando o Postman. A execução automatizada dos testes é realizada através de Integração Contínua com GitHub Actions.
 
 
 ![Status dos Testes](https://img.shields.io/github/workflow/status/iza975/Testes-api-postman-quality-eagles-academy13-api-postman/postman-tests.yml?label=Testes&style=for-the-badge)
