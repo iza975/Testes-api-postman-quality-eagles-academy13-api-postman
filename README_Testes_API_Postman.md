@@ -112,3 +112,13 @@ MeuProjetoPostman/
 ---
 
 Este projeto foi desenvolvido por Sônia Izabel Wicki, participante do QA Coders Academy 13, que acredita que a tecnologia transforma, a qualidade é indispensável e o aprendizado contínuo impulsiona a evolução.
+
+
+⚠️ Observações
+Este projeto foi desenvolvido durante o programa QA Coders Academy 13, utilizando uma API fornecida pela própria Academy.
+
+Com o passar do tempo, a API pode ter sofrido alterações (como exclusão, mudança ou proteção de endpoints), o que pode resultar em falhas nos testes automatizados (ex: erro 404 ou problemas de certificado SSL).
+
+O código original foi mantido como forma de demonstrar o conhecimento em testes de API com Postman, integração contínua com GitHub Actions, e boas práticas de versionamento e documentação.
+
+
