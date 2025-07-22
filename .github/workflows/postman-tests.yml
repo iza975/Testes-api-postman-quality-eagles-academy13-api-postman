@@ -1,11 +1,11 @@
 name: Run Postman Collection Tests
 
 on:
-  workflow_dispatch:       # Para rodar manualmente
-  push:                    # Para rodar em push
+  workflow_dispatch:       # Permite rodar manualmente
+  push:                    # Roda ao dar push na main
     branches:
       - main
-  pull_request:            # Para rodar em pull requests
+  pull_request:            # Roda em pull requests para main
     branches:
       - main
 
@@ -33,7 +33,7 @@ jobs:
             -e ./postman/dojo-academy.postman_environment.json \
             -g ./postman/workspace.postman_globals.json \
             -r cli,htmlextra \
-            --reporter-htmlextra-export newman-report.html
+            --reporter-htmlextra-export newman-report.html \
             --insecure
 
       - name: Upload Test Report
