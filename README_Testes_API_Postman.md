@@ -118,6 +118,7 @@ Este projeto foi desenvolvido por Sônia Izabel Wicki, participante do QA Coders
 
 
 Observações
+
 Este projeto foi desenvolvido durante o programa QA Coders Academy 13, utilizando uma API fornecida pela própria Academy.
 
 Com o passar do tempo, a API pode ter sofrido alterações (como exclusão, mudança ou proteção de endpoints), o que pode resultar em falhas nos testes automatizados (ex: erro 404 ou problemas de certificado SSL).
