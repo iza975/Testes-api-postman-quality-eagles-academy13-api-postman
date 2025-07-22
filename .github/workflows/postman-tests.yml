@@ -1,10 +1,11 @@
 name: Run Postman Collection Tests
 
 on:
-  push:
+  workflow_dispatch:       # Para rodar manualmente
+  push:                    # Para rodar em push
     branches:
       - main
-  pull_request:
+  pull_request:            # Para rodar em pull requests
     branches:
       - main
 
@@ -13,31 +14,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
 
-    - name: Install Newman and HTML Extra Reporter
-      run: |
-        npm install -g newman
-        npm install -g newman-reporter-htmlextra
+      - name: Install Newman and HTML Extra Reporter
+        run: |
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
 
+      - name: Run Postman Collection and Generate HTML Extra Report
+        run: |
+          newman run ./postman/Quality-Eagles.postman_collection.json \
+            -e ./postman/dojo-academy.postman_environment.json \
+            -g ./postman/workspace.postman_globals.json \
+            -r cli,htmlextra \
+            --reporter-htmlextra-export newman-report.html
 
-    - name: Run Postman Collection and Generate HTML Extra Report
-      run: |
-        newman run ./postman/Quality-Eagles.postman_collection.json \
-          -e ./postman/dojo-academy.postman_environment.json \
-          -g ./postman/workspace.postman_globals.json \
-          -r cli,htmlextra \
-          --reporter-htmlextra-export newman-report.html
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-html-report
+          path: newman-report.html
 
-
-    - name: Upload Test Report
-      uses: actions/upload-artifact@v4
-      with:
-        name: newman-html-report
-        path: newman-report.html
