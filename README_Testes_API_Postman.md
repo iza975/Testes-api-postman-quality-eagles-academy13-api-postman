@@ -3,7 +3,7 @@
 Este projeto faz parte do programa de formação QA Coders Academy  da QAcoders, com o objetivo de criar e executar testes de API utilizando o Postman. A execução automatizada dos testes é realizada através de Integração Contínua com GitHub Actions.
 
 
-![Status dos Testes](https://img.shields.io/github/actions/workflow/status/iza975/Testes-api-postman-quality-eagles-academy13-api-postman/postman-tests.yml?branch=main&label=Status%20dos%20Testes&style=for-the-badge)
+<![Status dos Testes](https://img.shields.io/github/actions/workflow/status/iza975/Testes-api-postman-quality-eagles-academy13-api-postman/postman-tests.yml?branch=main&label=Status%20dos%20Testes&style=for-the-badge)
 
 
  Sobre o Projeto
